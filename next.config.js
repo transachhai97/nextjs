@@ -1,6 +1,8 @@
 const path = require('path');
+const withPlugins = require('next-compose-plugins');
+const sass = require('@zeit/next-sass');
 
-module.exports = {
+const nextConfig = {
     // Target must be serverless
     target: 'serverless',
     webpack: (config, {buildId, dev, isServer, defaultLoaders, webpack}) => {
@@ -17,3 +19,19 @@ module.exports = {
         return config;
     },
 };
+
+module.exports = withPlugins(
+    [
+        [
+            sass,
+            {
+                cssModules: true,
+                cssLoaderOptions: {
+                    importLoaders: 1,
+                    localIdentName: '[local]___[hash:base64:5]',
+                },
+            },
+        ],
+    ],
+    nextConfig
+);
