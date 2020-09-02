@@ -10,6 +10,7 @@ module.exports = {
         config.resolve.alias = {
             ...aliases,
             'private-next-pages': path.resolve(__dirname, 'src/pages'),
+            '@': path.resolve(__dirname, 'src'),
         };
 
         // Important: return the modified config
