@@ -2,6 +2,8 @@ const path = require('path');
 const withPlugins = require('next-compose-plugins');
 const sass = require('@zeit/next-sass');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
     // Target must be serverless
     target: 'serverless',
@@ -28,7 +30,7 @@ module.exports = withPlugins(
                 cssModules: true,
                 cssLoaderOptions: {
                     importLoaders: 1,
-                    localIdentName: '[local]___[hash:base64:5]',
+                    localIdentName: isProduction ? '[name]__[local]--[hash:base64:5]' : '[path][name]__[local]',
                 },
             },
         ],
