@@ -48,7 +48,6 @@ const nextConfig = {
                 ),
             );
         }
-        console.log(config);
         // Important: return the modified config
         return config;
     },
