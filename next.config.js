@@ -2,6 +2,7 @@ const path = require('path');
 const withPlugins = require('next-compose-plugins');
 const sass = require('@zeit/next-sass');
 const genericNames = require('generic-names');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const localIdentName = isProduction ? '[name]__[local]--[hash:base64:5]' : '[path][name]__[local]';
@@ -26,6 +27,11 @@ const nextConfig = {
             '@': path.resolve(__dirname, 'src'),
         };
 
+        config.plugins.push(
+            new StyleLintPlugin({
+                files: ['src/**/*.{js,jsx,htm,html,css,sss,less,scss,sass}'],
+            }),
+        );
         // Important: return the modified config
         return config;
     },
