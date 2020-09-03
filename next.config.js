@@ -3,6 +3,7 @@ const withPlugins = require('next-compose-plugins');
 const sass = require('@zeit/next-sass');
 const genericNames = require('generic-names');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const localIdentName = isProduction ? '[name]__[local]--[hash:base64:5]' : '[path][name]__[local]';
@@ -32,6 +33,22 @@ const nextConfig = {
                 files: ['src/**/*.{js,jsx,htm,html,css,sss,less,scss,sass}'],
             }),
         );
+
+        if (isProduction) {
+            config.plugins.push(
+                new CopyWebpackPlugin(
+                    {
+                        patterns: [
+                            {
+                                from: path.join(__dirname, 'docs'),
+                                to: path.join(__dirname, 'public/docs'),
+                            },
+                        ],
+                    },
+                ),
+            );
+        }
+        console.log(config);
         // Important: return the modified config
         return config;
     },
